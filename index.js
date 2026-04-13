@@ -12,6 +12,10 @@ app.use(auth({
   clientID: process.env.AUTH0_CLIENT_ID,
   issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL
 }))
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "img-src 'self' https://lh3.googleusercontent.com https://*.googleusercontent.com data:;")
+  next()
+})
 
 app.get('/', (req, res) => {
   if (req.oidc.isAuthenticated()) {
